@@ -2,23 +2,40 @@
 
 namespace HomeWork
 {
+    // Realisation of a Fraction class 
     public class Fraction
     {
-        public double Numerator = 0;
-        public double Denominator = 0;
+        // Method overloading
+        public int Numerator;
+        public int Denominator;
 
-        public Fraction(int Numerator, int Denominator)
+        public Fraction(int a)
         {
-            this.Numerator = Numerator;
-            this.Denominator = Denominator;
+            Numerator = a;
+            Denominator = 1;
+        }
+        public Fraction(int a, int b)
+
+        {
+            Numerator = a;
+            Denominator = b;
+        }
+        public Fraction(int a, int b, int c)
+
+        {
+            Numerator = (a * c) + b;
+            Denominator = c;
         }
 
+        // Method that convert Fractions to string type to output in console
         public override string ToString()
         {
             return " " + Numerator.ToString() + "/" + Denominator.ToString() + " ";
         }
 
-        public static Fraction operator +(Fraction Fraction1, Fraction Fraction2)
+        // TASK 2 - Main Mathematical Operations
+        // Operator "+"
+        public static Fraction operator + (Fraction Fraction1, Fraction Fraction2)
         {
             Fraction TempFraction = new Fraction(1, 1);
             TempFraction.Numerator = (Fraction1.Numerator * Fraction2.Denominator + Fraction1.Denominator * Fraction2.Numerator);
@@ -27,7 +44,9 @@ namespace HomeWork
             return TempFraction;
 
         }
-        public static Fraction operator -(Fraction Fraction1, Fraction Fraction2)
+
+        // Operator "-"
+        public static Fraction operator - (Fraction Fraction1, Fraction Fraction2)
         {
             Fraction TempFraction = new Fraction(1, 1);
             TempFraction.Numerator = (Fraction1.Numerator * Fraction2.Denominator - Fraction1.Denominator * Fraction2.Numerator);
@@ -36,7 +55,9 @@ namespace HomeWork
             return TempFraction;
 
         }
-        public static Fraction operator *(Fraction Fraction1, Fraction Fraction2)
+
+        // Operator "*"
+        public static Fraction operator * (Fraction Fraction1, Fraction Fraction2)
         {
             Fraction TempFraction = new Fraction(1, 1);
             TempFraction.Numerator = (Fraction1.Numerator * Fraction2.Numerator);
@@ -45,7 +66,9 @@ namespace HomeWork
             return TempFraction;
 
         }
-        public static Fraction operator /(Fraction Fraction1, Fraction Fraction2)
+
+        // Operator "/"
+        public static Fraction operator / (Fraction Fraction1, Fraction Fraction2)
         {
             Fraction TempFraction = new Fraction(1, 1);
             TempFraction.Numerator = (Fraction1.Numerator * Fraction2.Denominator);
@@ -53,18 +76,20 @@ namespace HomeWork
             Fraction.SetFormat(TempFraction);
             return TempFraction;
         }
+
+        // Method that controls the format of the fraction and doesnt allow a "-" in the denominator
+        // It moves "-" to numerator and then we can assume fraction's sign
         public static Fraction SetFormat(Fraction Fraction1)
         {
 
-            double max = 0;
+            int max = 0;
 
-            
             if (Fraction1.Numerator > Fraction1.Denominator)
-                max = Math.Abs(Fraction1.Denominator);
+                max = Convert.ToInt32(Math.Abs(Fraction1.Denominator));
             else
-                max = Math.Abs(Fraction1.Numerator);
-                                                    
-            for (double i = max; i >= 2; i--)
+                max = Convert.ToInt32(Math.Abs(Fraction1.Numerator));
+
+            for (int i = max; i >= 2; i--)
             {
 
                 if ((Fraction1.Numerator % i == 0) & (Fraction1.Denominator % i == 0))
@@ -82,19 +107,25 @@ namespace HomeWork
             }
             return (Fraction1);
         }
-        public string Indexer(int index)
+
+        // TASK 5 - Indexer
+        public int this[int index]
         {
-            if (index == 0)
+            get
             {
-                return Convert.ToString(Numerator);
+                if (index == 0)
+                {
+                    return Numerator;
+                }
+                else if (index == 1)
+                {
+                    return Denominator;
+                }
+                else
+                {
+                    return -1;
+                }
             }
-
-            if (index == 1)
-            {
-                return Convert.ToString(Denominator);
-            }
-
-            return "Неверный индекс";
         }
     }
 }
